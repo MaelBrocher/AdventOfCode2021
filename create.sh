@@ -8,6 +8,6 @@ do
         mkdir Day$i
     fi
     touch Day$i/code_day_$i.py
-    cat base.py > Day$i/code_day_$i.py
+    cat .base.py > Day$i/code_day_$i.py
     ((i=i+1))
 done

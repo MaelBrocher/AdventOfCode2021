@@ -1,6 +1,6 @@
 #!/bin/bash
 
-i=0
+i=1
 
 until [ $i -gt 25 ]
 do

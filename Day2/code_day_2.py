@@ -3,12 +3,15 @@ def submarine(data, aiming=False):
     for d in data:
         position, depth, aim = values
         shift = int(d[1])
-        if d[0] == 'up':
-            values = [position, depth, aim - shift] if aiming else [position, depth - shift, aim]
-        elif d[0] == 'down':
-            values = [position, depth, aim + shift] if aiming else [position, depth + shift, aim]
-        else :
-            values = [position + shift, depth + (aim * shift), aim] if aiming else [position + shift, depth, aim]
+        match d[0]:
+            case "up":
+                values = [position, depth, aim - shift] if aiming else [position, depth - shift, aim]
+            case "down":
+                values = [position, depth, aim + shift] if aiming else [position, depth + shift, aim]
+            case "forward" :
+                values = [position + shift, depth + (aim * shift), aim] if aiming else [position + shift, depth, aim]
+            case _ :
+                print(d[0])
     return (values[0] * values[1])
 
 def main():

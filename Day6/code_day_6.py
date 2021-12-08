@@ -5,16 +5,10 @@ def fishlivesmatter(fishes, time):
     return sum(fishes)
 
 def main():
-    fishes = [0] * 9
-    fresh_fishes = [0] * 9
-    f = open('input.sql', 'r').readline().split(',')
-    for fish in f:
-        fishes[int(fish)] += 1
-    for fish in f:
-        fresh_fishes[int(fish)] += 1
+    fishes = [open('inputs/input6', 'r').readline().strip().split(',').count(str(i)) for i in range(8)]
 
-    print("Part1 = {}".format(fishlivesmatter(fishes, 80)))
-    print("Part2 = {}".format(fishlivesmatter(fresh_fishes, 256)))
+    print("Part1 = {}".format(fishlivesmatter(fishes.copy(), 80)))
+    print("Part2 = {}".format(fishlivesmatter(fishes.copy(), 256)))
 
 if __name__ == '__main__':
     main()

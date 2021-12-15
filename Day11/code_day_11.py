@@ -42,9 +42,6 @@ def processSquids(data, step):
                             if 0<=nx<10 and 0<=ny<10:
                                 if data[nx][ny]!=10 and data[nx][ny]!=0:
                                     data[nx][ny]+=1
-        if countN(data)[1]==100:
-            print(s)
-            exit()
     return f
 
 def SquidBlink(data):

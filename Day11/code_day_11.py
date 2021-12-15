@@ -1,6 +1,7 @@
 from colorama import init
 from colorama import Fore, Back, Style
-
+import time
+ 
 init(autoreset=True)
 
 def printSquid(data):
@@ -13,34 +14,63 @@ def printSquid(data):
         print()
     print()
 
-def too_brigth(data, x, y):
-    for xt, yt in zip([x-1,x-1,x-1,x,x+1,x+1,x+1,x],[y-1,y,y+1,y+1,y+1,y,y-1,y-1]):
-        try :
-            if xt >= 0 and yt >= 0:
-                if data[xt][yt] >= 0:
-                    data[xt][yt] += 1
-                if data[xt][yt] >= 9:
-                    data[xt][yt] = -1
-                    too_brigth(data,xt,yt)
-        except IndexError:
-            pass
+def countN(data):
+    c10,c0=0,0
+    for x in range(10):
+        for y in range(10):
+            if data[x][y]==10:
+                c10+=1
+            if data[x][y]==0:
+                c0+=1
+    return c10,c0
 
-def incrementsquid(data, n):
-    printSquid(data)
-    for i in range(0, n):
-        for x, line in enumerate(data):
-            for y, squid in enumerate(line):
-                if squid >= 9:
-                    data[x][y] = 0
-                    too_brigth(data,x,y)
-                else:
-                    data[x][y] += 1
-        printSquid(data)
-    return
+def processSquids(data, step):
+    f=0
+    neighbors = [ [-1,1],[0,1],[1,1],[-1,0],[1,0],[-1,-1],[0,-1],[1,-1] ]
+    for s in range(step):
+        for x in range(10):
+            for y in range(10):
+                data[x][y]+=1
+        while countN(data)[0]>0:
+            for x in range(10):
+                for y in range(10):
+                    if data[x][y]==10:
+                        data[x][y]=0
+                        f+=1
+                        for dx,dy in neighbors:
+                            nx,ny=x+dx,y+dy
+                            if 0<=nx<10 and 0<=ny<10:
+                                if data[nx][ny]!=10 and data[nx][ny]!=0:
+                                    data[nx][ny]+=1
+        if countN(data)[1]==100:
+            print(s)
+            exit()
+    return f
+
+def SquidBlink(data):
+    neighbors = [ [-1,1],[0,1],[1,1],[-1,0],[1,0],[-1,-1],[0,-1],[1,-1] ]
+    s = 0
+    while countN(data)[1] !=100:
+        for x in range(10):
+            for y in range(10):
+                data[x][y]+=1
+        while countN(data)[0]>0:
+            for x in range(10):
+                for y in range(10):
+                    if data[x][y]==10:
+                        data[x][y]=0
+                        for dx,dy in neighbors:
+                            nx,ny=x+dx,y+dy
+                            if 0<=nx<10 and 0<=ny<10:
+                                if data[nx][ny]!=10 and data[nx][ny]!=0:
+                                    data[nx][ny]+=1
+        s+=1
+        if countN(data)[1]==100:
+            return s
 
 def main():
-    data = [[int(n) for n in line.strip()] for line in open("input.sql").readlines()]
-    incrementsquid(data, 10)
+    print("Part 1 = {}".format(processSquids([[int(n) for n in line.strip()] for line in open("input.sql").readlines()], 100)))
+    print("Part 2 = {}".format(SquidBlink([[int(n) for n in line.strip()] for line in open("input.sql").readlines()])))
     return
 
 if __name__ == '__main__':

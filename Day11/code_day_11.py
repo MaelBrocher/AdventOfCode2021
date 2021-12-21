@@ -7,8 +7,8 @@ init(autoreset=True)
 def printSquid(data):
     for x,l in enumerate(data):
         for y, squid in enumerate(l):
-            if squid == 0:
-                print(Fore.YELLOW + Style.BRIGHT + str(squid),end='')
+            if squid == 0 or squid == 10:
+                print(Fore.YELLOW + Style.BRIGHT + str(0),end='')
             else:
                 print(Style.DIM + str(squid),end='')
         print()
